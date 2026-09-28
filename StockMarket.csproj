@@ -1,0 +1,143 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>StockMarket</AssemblyName>
+    <RootNamespace>StockMarket</RootNamespace>
+    <LangVersion>9.0</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x64</PlatformTarget>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+
+    <!-- 本机只装了 .NET 10 的 targeting pack，没有 6.0 的。
+         关掉隐式框架引用，改为直接引用 .NET 6 运行时程序集，避免去拉 6.0 的 ref pack。 -->
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+    <NoWarn>$(NoWarn);CS0169;CS0649;CS0414</NoWarn>
+  </PropertyGroup>
+
+  <!-- 换机器只需改这三行 -->
+  <PropertyGroup>
+    <GameDir>D:\Steam\steamapps\common\Probably Stolen Demo</GameDir>
+    <Il2CppDir>$(GameDir)\MelonLoader\Il2CppAssemblies</Il2CppDir>
+    <MelonNet6Dir>$(GameDir)\MelonLoader\net6</MelonNet6Dir>
+    <DotNet6Dir>C:\Program Files\dotnet\shared\Microsoft.NETCore.App\6.0.36</DotNet6Dir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="MelonLoader">
+      <HintPath>$(MelonNet6Dir)\MelonLoader.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>$(MelonNet6Dir)\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Il2CppInterop.Runtime">
+      <HintPath>$(MelonNet6Dir)\Il2CppInterop.Runtime.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(Il2CppDir)\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>$(Il2CppDir)\Assembly-CSharp-firstpass.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Il2Cppmscorlib">
+      <HintPath>$(Il2CppDir)\Il2Cppmscorlib.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>$(Il2CppDir)\Unity.TextMeshPro.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(Il2CppDir)\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>$(Il2CppDir)\UnityEngine.UIModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>$(Il2CppDir)\UnityEngine.UI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>$(Il2CppDir)\UnityEngine.InputLegacyModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <!-- 核心类型（String/Int32/Object…）定义在 System.Private.CoreLib，
+         其余 System.* 只是转发程序集，必须显式引用核心库 -->
+    <Reference Include="System.Private.CoreLib">
+      <HintPath>$(DotNet6Dir)\System.Private.CoreLib.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <!-- Uri 在 System.Private.Uri 里，HttpWebRequest 签名要用到 -->
+    <Reference Include="System.Private.Uri">
+      <HintPath>$(DotNet6Dir)\System.Private.Uri.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System.Runtime">
+      <HintPath>$(DotNet6Dir)\System.Runtime.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Extensions">
+      <HintPath>$(DotNet6Dir)\System.Runtime.Extensions.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System.Collections">
+      <HintPath>$(DotNet6Dir)\System.Collections.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System.Linq">
+      <HintPath>$(DotNet6Dir)\System.Linq.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <!-- 版本检查要联网：HttpWebRequest / WebResponse / DecompressionMethods -->
+    <Reference Include="System.Net.Requests">
+      <HintPath>$(DotNet6Dir)\System.Net.Requests.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System.Net.Primitives">
+      <HintPath>$(DotNet6Dir)\System.Net.Primitives.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System.Net.WebHeaderCollection">
+      <HintPath>$(DotNet6Dir)\System.Net.WebHeaderCollection.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System.Net.Security">
+      <HintPath>$(DotNet6Dir)\System.Net.Security.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System.Net.ServicePoint">
+      <HintPath>$(DotNet6Dir)\System.Net.ServicePoint.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System.Threading.Thread">
+      <HintPath>$(DotNet6Dir)\System.Threading.Thread.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System.Text.Encoding">
+      <HintPath>$(DotNet6Dir)\System.Text.Encoding.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System.IO">
+      <HintPath>$(DotNet6Dir)\System.IO.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="netstandard">
+      <HintPath>$(DotNet6Dir)\netstandard.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>
